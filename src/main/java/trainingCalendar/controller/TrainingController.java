@@ -9,6 +9,7 @@ import trainingCalendar.entity.Training;
 import trainingCalendar.rep.TrainingsRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/trainings")
@@ -21,11 +22,24 @@ public class TrainingController {
     }
 
     @GetMapping
-    public List<Training> getAllTrainings(@RequestParam(required = false) Integer month, @RequestParam(required = false) Integer year) {
-        if (month != null && year != null) {
-            return trainingRepository.findActualTrainingsByMonthAndYear(month, year);
-        } else {
-            return trainingRepository.findActualTrainings();
-        }
+    public List<Training> getAllTrainings(@RequestParam Integer month, @RequestParam Integer year, @RequestParam List<String> cities) {
+        List<String> transformedCities = cities.stream()
+                .map(city -> {
+                    switch (city) {
+                        case "msk":
+                            return "Мск";
+                        case "spb":
+                            return "СПб";
+                        case "online":
+                            return "Онлайн";
+                        default:
+                            return city;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        return trainingRepository.findActualTrainingsByMonthAndYearAndCities(month, year, transformedCities);
     }
 }
+
+

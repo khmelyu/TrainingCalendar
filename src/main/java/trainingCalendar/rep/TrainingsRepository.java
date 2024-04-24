@@ -10,10 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TrainingsRepository extends JpaRepository<Training, Long> {
-    @Query("SELECT t FROM Training t WHERE t.actual = true")
-    List<Training> findActualTrainings();
-
-    @Query(value = "SELECT * FROM training t WHERE t.actual = true AND EXTRACT(MONTH FROM t.date) = :month AND EXTRACT(YEAR FROM t.date) = :year", nativeQuery = true)
-    List<Training> findActualTrainingsByMonthAndYear(@Param("month") int month, @Param("year") int year);
-
+    @Query(value = "SELECT * FROM training t WHERE t.actual = true AND EXTRACT(MONTH FROM t.date) = :month AND EXTRACT(YEAR FROM t.date) = :year AND t.city IN (:cities)", nativeQuery = true)
+    List<Training> findActualTrainingsByMonthAndYearAndCities(@Param("month") int month, @Param("year") int year, @Param("cities") List<String> cities);
 }
+
+
+

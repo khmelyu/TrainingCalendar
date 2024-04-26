@@ -24,10 +24,10 @@ public class Training {
     @JsonIgnore
     private boolean actual;
     @JsonIgnore
-    private String time;
+    private String start_time;
 
     @JsonGetter("name")
     public String getName() {
-        return (time.substring(0, time.length() - 3) + " " + name.substring(8));
+        return (start_time.substring(0, start_time.length() - 3) + " " + name.substring(8));
     }
 }

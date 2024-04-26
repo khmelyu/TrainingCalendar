@@ -21,10 +21,10 @@ public class Training {
     private String city;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String date;
+    private String start_time;
     @JsonIgnore
     private boolean actual;
-    @JsonIgnore
-    private String start_time;
+
 
     @JsonGetter("name")
     public String getName() {
